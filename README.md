@@ -6,11 +6,11 @@ OSSEC-HIDS agent management role for Ansible
 This role is a reference implementation that you are free to use or
 learn from (or complain about) for managing OSSEC-HIDS agents. Feel free
 to contact me if you have questions or find me (asg) on freenode in
-#ansible. This implementation is Debian/Ubuntu specific but should only
+ #ansible. This implementation is Debian/Ubuntu specific but should only
 require minimal changes to work with other *NIX variants.
 
 Features
-========
+--------
 
     * Compiles the current (2.7) agent version from source
     * Will install compilers if they aren't already on the system and remove
@@ -24,7 +24,7 @@ Features
     * Automatically syncs the client key with the server
 
 Requirements
-============
+------------
 
     * You'll need to have your ossec server setup already and its IP
       address set in group_vars/all. I'm working on a server role as
@@ -40,7 +40,7 @@ Requirements
       instead of hashlib
 
 Caveats/Limitations
-===================
+-------------------
 
     * The key id for each agent is the last octet of its ipv4 primary
       interface. This provides for 254 agents for each ossec server. If
