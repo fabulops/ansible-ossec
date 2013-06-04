@@ -171,6 +171,7 @@
         ansible_default_ipv4.address.split('.')[-1] }}
         state=absent
   when: client_key.changed
+  notify: ossec - restart server
   delegate_to: "{{ ossec.server }}"
   tags: ossec
 
