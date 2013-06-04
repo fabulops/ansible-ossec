@@ -26,6 +26,7 @@ Features
 Requirements
 ------------
 
+   * ansible 1.2 or greater
    * You'll need to have your ossec server setup already and its IP
      address set in group_vars/all. I'm working on a server role as
      well but it isn't currently available.
