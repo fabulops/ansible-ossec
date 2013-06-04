@@ -1,4 +1,4 @@
-# This works with python >2.5. If you are using 2.4, you'll need to use
+# This works with python >=2.5. If you are using 2.4, you'll need to use
 # md5
 
 import hashlib
