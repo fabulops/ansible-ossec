@@ -1,0 +1,9 @@
+---
+- name: ossec - restart agent
+  service: name=ossec state=restarted 
+  tags: ossec
+
+- name: ossec - restart server
+  service: name=ossec state=restarted
+  delegate_to: "{{ ossec.server }}"
+  tags: ossec

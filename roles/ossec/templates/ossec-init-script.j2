@@ -1,0 +1,52 @@
+#!/bin/sh
+# OSSEC	        Controls OSSEC HIDS
+# Author:       Daniel B. Cid <dcid@ossec.net>
+# Modified for Debian by Michael Starks (patch by Costas Drogos)
+# {{ ansible_managed }}
+
+### BEGIN INIT INFO
+# Provides:          ossec
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Should-Start:      $network 
+# Should-Stop:       $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start and stop OSSEC HIDS
+# Description:       Controls OSSEC HIDS daemons
+#
+### END INIT INFO
+
+. /etc/ossec-init.conf
+if [ "X${DIRECTORY}" = "X" ]; then
+    DIRECTORY="/var/ossec"
+fi
+
+    
+start() {
+	${DIRECTORY}/bin/ossec-control start
+}
+
+stop() {
+	${DIRECTORY}/bin/ossec-control stop
+}
+
+case "$1" in
+  start)
+	start
+	exit 0
+	;;
+  stop) 
+	stop
+	exit 0
+	;;
+  restart)
+	stop
+	start
+	exit 0
+	;;
+  *)
+	echo "*** Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+

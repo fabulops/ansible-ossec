@@ -1,0 +1,14 @@
+---
+### OSSEC
+#
+# Default variables for OSSEC HIDS clients
+ossec:
+  tarball: ossec-hids-2.7.tar.gz
+  checksum: 71cd21a20f22b8eafffa3b57250f0a70
+  install_dir: /var/ossec
+  untar_dir: ossec-hids-2.7
+  tmp_dir: /tmp
+  url: http://www.ossec.net/files/
+
+  # IP Address of your OSSEC server
+  server: xxx.xxx.xxx.xxx
