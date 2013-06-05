@@ -1,2 +1,2 @@
-{% set key = ansible_hostname + ansible_ssh_host_key_dsa_public -%} 
-{{ ansible_default_ipv4.address.split('.')[-1] }} {{ ansible_hostname }} {{ ansible_default_ipv4.address }} {{ key|md5 }}{{ ansible_default_ipv4.address|md5 }}
+{% set key = ansible_hostname + ansible_ssh_host_key_dsa_public -%}
+{{ ansible_eth0.ipv4.address.split('.')[-1] }} {{ ansible_hostname }} {{ ansible_eth0.ipv4.address }} {{ key|md5 }}{{ ansible_eth0.ipv4.address|md5 }}

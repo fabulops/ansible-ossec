@@ -168,7 +168,7 @@
 # Remove the server's queue/rids file for a fresh start
 - name: ossec - remove stale rids file
   file: path={{ ossec.install_dir }}/queue/rids/{{
-        ansible_default_ipv4.address.split('.')[-1] }}
+        ansible_eth0.ipv4.address.split('.')[-1] }}
         state=absent
   when: client_key.changed
   notify: ossec - restart server
