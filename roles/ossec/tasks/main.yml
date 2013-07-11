@@ -15,7 +15,7 @@
 - name: ossec - install required compiler components (if necessary)
   apt: pkg=build-essential state=installed
   register: compiler
-  when: installed.changed
+  when: installed.changed is defined and installed.changed
   tags: ossec
 
 # Download ossec tarball if it doesn't already exist and ossec is not
@@ -24,7 +24,7 @@
   get_url: url={{ ossec.url }}/{{ ossec.tarball }}
            dest={{ ossec.tmp_dir }}/{{ ossec.tarball }}
            mode=0600
-  when: installed.changed
+  when: installed.changed is defined and installed.changed
   register: tarball
   tags: ossec
 
@@ -32,7 +32,7 @@
 - name: ossec - calculate the md5 checksum of the tarball
   shell: /usr/bin/md5sum {{ ossec.tmp_dir }}/{{ ossec.tarball }}
   register: md5
-  when: tarball.changed
+  when: tarball.changed is defined and tarball.changed
   tags: ossec
 
 # Verify the md5 checksum against the known value
@@ -46,7 +46,7 @@
   command: /bin/tar -xzf {{ ossec.tmp_dir }}/{{ ossec.tarball }} 
            chdir={{ ossec.tmp_dir }}
            creates={{ ossec.tmp_dir }}/{{ ossec.untar_dir }}
-  when: tarball.changed
+  when: tarball.changed is defined and tarball.changed
   tags: ossec
 
 # Populate the preloaded-vars.conf
@@ -57,7 +57,7 @@
   first_available_file:
     - "{{ ansible_hostname }}_preloaded-vars.conf.j2"
     - preloaded-vars.conf.j2
-  when: tarball.changed
+  when: tarball.changed is defined and tarball.changed
   tags: ossec
 
 # Create a system group
@@ -74,7 +74,8 @@
 # Build / Install the agent
 - name: ossec - build/install the agent
   command: ./install.sh chdir={{ ossec.tmp_dir }}/{{ ossec.untar_dir }}
-  when: installed.changed or tarball.changed
+  when: (installed.changed is defined and installed.changed) or
+        (tarball.changed is defined and tarball.changed)
   tags: ossec
 
 ###########################################################################
@@ -168,7 +169,7 @@
 # Remove the server's queue/rids file for a fresh start
 - name: ossec - remove stale rids file
   file: path={{ ossec.install_dir }}/queue/rids/{{
-        ansible_eth0.ipv4.address.split('.')[-1] }}
+        server_key.stdout.split()[0] }}
         state=absent
   when: client_key.changed
   notify: ossec - restart server
